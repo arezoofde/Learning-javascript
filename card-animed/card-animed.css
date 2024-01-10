@@ -1,0 +1,7 @@
+#animatedDiv {
+    width:200px;
+    backgroundColor :rgba(103, 114, 157, 0.67);
+  }
+  #animatedDiv:hover{
+    background-color: yellow;
+  }
