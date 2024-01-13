@@ -1,11 +1,11 @@
-
+console.log("hiii")
 let allProducts = [
-    { id: 1, title: 'Album 1', price: 12.93, img: './Images/Album 1.png' },
-    { id: 2, title: 'Album 2', price: 21, img: './Images/Album 2.png' },
-    { id: 3, title: 'Album 3', price: 33, img: './Images/Album 3.png' },
-    { id: 4, title: 'Album 4', price: 41.98, img: './Images/Album 4.png' },
-    { id: 5, title: 'Coffee', price: 98, img: './Images/Cofee.png' },
-    { id: 6, title: 'Shirt', price: 65.33, img: './Images/Shirt.png' },
+    { id: 1, title: 'Album 1', price: 12.93, img: './Images/Album 1.png', count : 1 },
+    { id: 2, title: 'Album 2', price: 21, img: './Images/Album 2.png', count : 1 },
+    { id: 3, title: 'Album 3', price: 33, img: './Images/Album 3.png', count : 1 },
+    { id: 4, title: 'Album 4', price: 41.98, img: './Images/Album 4.png', count : 1 },
+    { id: 5, title: 'Coffee', price: 98, img: './Images/Cofee.png', count : 1 },
+    { id: 6, title: 'Shirt', price: 65.33, img: './Images/Shirt.png', count : 1 },
 ]
 
 let userBasket = []
@@ -13,6 +13,7 @@ let userBasket = []
 let $ = document
 let shopItemsContainer = $.querySelector('.shop-items')
 let bastekProductsContainer = $.querySelector('.cart-items')
+let removeAllProductsBtn = $.querySelector('#removeAllProductsBtn')
 
 allProducts.forEach(function (product) {
     let productContainer = $.createElement('div')
@@ -90,7 +91,10 @@ function basketProductsGenerator(userBasketArray) {
         let basketProductRemoveBtn = $.createElement('button')
         basketProductRemoveBtn.className = 'btn btn-danger'
         basketProductRemoveBtn.innerHTML = 'Remove'
-
+        basketProductRemoveBtn.addEventListener('click' ,function () {
+            removeProductFromBasket(product.id)
+        })
+        
         basketProductDetailsContainer.append(basketProductImg,basketProductTitleSpan)
 
         basketProductContainer.append(basketProductDetailsContainer ,basketProductPriceSpan,basketProductInputsContainer )
@@ -99,3 +103,15 @@ function basketProductsGenerator(userBasketArray) {
     })
     
 }
+
+function removeProductFromBasket(productId) {
+    userBasket = userBasket.filter(function (product) {
+        console.log(product.id)
+        return product.id !== productId
+    })
+    basketProductsGenerator(userBasket)
+}
+removeAllProductsBtn.addEventListener('click',function () {
+    userBasket = []
+    basketProductsGenerator(userBasket)
+})
