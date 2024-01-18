@@ -1,4 +1,4 @@
-console.log("hiii")
+console.log("hiiwwi")
 let allProducts = [
     { id: 1, title: 'Album 1', price: 12.93, img: './Images/Album 1.png', count : 1 },
     { id: 2, title: 'Album 2', price: 21, img: './Images/Album 2.png', count : 1 },
@@ -13,9 +13,11 @@ let userBasket = []
 let $ = document
 let shopItemsContainer = $.querySelector('.shop-items')
 let bastekProductsContainer = $.querySelector('.cart-items')
-let removeAllProductsBtn = $.querySelector('#removeAllProductsBtn')
+let removeAllProductsBtn = $.querySelector('#remove-all-products')
+let cartTotalPrice = $.querySelector('.cart-total-price')
 
 allProducts.forEach(function (product) {
+
     let productContainer = $.createElement('div')
     productContainer.classList.add('shop-item')
     let productTitleSpan = $.createElement('span')
@@ -53,13 +55,14 @@ function addProductToBasketArray(productId) {
    userBasket.push(mainProduct)
 
    basketProductsGenerator(userBasket)
-
+   calcTotalPrice(userBasket)
    console.log(userBasket)
 }
 
 function basketProductsGenerator(userBasketArray) {
-
+     bastekProductsContainer.innerHTML = ''
     userBasketArray.forEach(function (product) {
+       
         let basketProductContainer = $.createElement('div')
         basketProductContainer.classList.add('cart-row')
 
@@ -78,13 +81,13 @@ function basketProductsGenerator(userBasketArray) {
 
         let basketProductPriceSpan = $.createElement('span')
         basketProductPriceSpan.className = 'cart-price cart-column'
-        basketProductPriceSpan.innerHTML = '$' + product.price
+        basketProductPriceSpan.innerHTML =  product.price
 
         let basketProductInputsContainer = $.createElement('div')
         basketProductInputsContainer.className = ('cart-quantity cart-column')
 
         let basketProductInput = $.createElement('input')
-        basketProductInput.value = '1'
+        basketProductInput.value = product.count
         basketProductInput.classList.add('cart-quantity-input')
         basketProductInput.setAttribute('type','number')
 
@@ -115,3 +118,11 @@ removeAllProductsBtn.addEventListener('click',function () {
     userBasket = []
     basketProductsGenerator(userBasket)
 })
+function calcTotalPrice(userBasketArray) {
+    let totalprice = 0;    
+    
+    userBasketArray.forEach(function (product)  {
+        totalprice += product.price * product.count
+     })
+     cartTotalPrice.innerHTML = totalprice
+}
